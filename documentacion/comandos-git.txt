@@ -3,3 +3,11 @@ git add .
 git commit -m "archivo actualizado"
 
 git push origin master
+
+----------- GIT FLOW ----------------
+git flow init
+
+develop:
+git flow feature start add_login
+git flow feature finish add_login
+
