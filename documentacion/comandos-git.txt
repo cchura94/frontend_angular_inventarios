@@ -8,6 +8,6 @@ git push origin master
 git flow init
 
 develop:
-git flow feature start add_login
-git flow feature finish add_login
+git flow feature start add_config
+git flow feature finish add_config
 
