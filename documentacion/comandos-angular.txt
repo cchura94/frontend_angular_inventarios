@@ -1,4 +1,4 @@
 ng generate environments
 
 Para generar un modulo en angular
-ng g mo auth
+ng g m auth --routing
