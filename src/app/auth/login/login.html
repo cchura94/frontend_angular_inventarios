@@ -1,1 +1,17 @@
 <h1>Ingresar</h1>
+<div [formGroup]="loginForm">
+
+    <label for="">Ingrese su Correo</label>
+    <input type="email" formControlName="email">
+    <br>
+    <label for="">Ingrese su Contraseña</label>
+    <input type="password" formControlName="password">
+    <br>
+    <button [disabled]="!loginForm.valid" (click)="funIngresarConLaravel()">Ingresar</button>
+    <br>
+    DATA: {{loginForm.value | json}}
+    <br>
+    VALIDO: {{loginForm.valid}}
+    <br>
+    MI TOKEN: {{token}}
+</div>
