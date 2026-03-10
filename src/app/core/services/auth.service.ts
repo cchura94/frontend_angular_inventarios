@@ -14,4 +14,8 @@ export class AuthService {
     return this.http.post(`${this.urlBase}/api/v1/auth/login`, credenciales)
   }
 
+  funGetPerfil(){
+    return this.http.get(`${this.urlBase}/api/v1/auth/profile`);
+  }
+
 }
