@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,15 +16,20 @@ export class Login {
     password: new FormControl('', [Validators.required]),
   });
 
-  token: string = "";
+  token = signal<string>("");
 
   authService = inject(AuthService)
+  router = inject(Router)
 
   funIngresarConLaravel(){
     this.authService.funLoginConectarConBackendLaravel(this.loginForm.value).subscribe(
       (res: any) => {
         console.log("CORRECTO: ", res);
-        this.token = res.access_token;
+        this.token.set(res.access_token);
+        localStorage.setItem("access_token", res.access_token);
+
+        this.router.navigate(["/admin/perfil"]);
+
       }
     )
   }

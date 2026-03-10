@@ -3,6 +3,7 @@ import { WebLayout } from './layout/web-layout/web-layout';
 import { Inicio } from './web/inicio/inicio';
 import { Nosotros } from './web/nosotros/nosotros';
 import { Servicios } from './web/servicios/servicios';
+import { Perfil } from './admin/perfil/perfil';
 
 export const routes: Routes = [
     {
@@ -15,6 +16,10 @@ export const routes: Routes = [
             {
                 path: "auth",
                 loadChildren: () => import('./auth/auth-module').then(m => m.AuthModule)
+            },
+            {
+                path: "admin/perfil",
+                component: Perfil
             }
         ]
     },
