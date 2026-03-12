@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +31,15 @@ export class Login {
 
         this.router.navigate(["/admin/perfil"]);
 
-      }
+      },
+      ((error: any) => {
+        console.log(error);
+        if(error.status === 401){
+          alert("Credenciales incorrectas")
+        }else if(error.status === 500){
+          alert("Ocurrió un error en el Sevidor")
+        }
+      })
     )
   }
 

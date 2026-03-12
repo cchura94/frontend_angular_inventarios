@@ -1,0 +1,40 @@
+<h1>Gestión de Usuarios</h1>
+
+{{ usuarios() }}
+
+<form [formGroup]="userForm" (ngSubmit)="funGuardarUsuario()">
+    <label for="">Ingrese su Nombre</label>
+    <input type="text" formControlName="name">
+    <br>
+    <label for="">Ingrese su Correo</label>
+    <input type="email" formControlName="email">
+    <br>
+    <label for="">Ingrese su Contraseña</label>
+    <input type="password" formControlName="password">
+    <br>
+    <input type="submit" value="Guardar Cambios" [disabled]="!userForm.valid">
+</form>
+
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>CORREO</th>
+            <th>NOMBRE</th>
+            <th>ACCIÓN</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (u of usuarios(); track $index) {
+            <tr>
+                <td>{{ u.id }}</td>
+                <td>{{ u.email }}</td>
+                <td>{{ u.name }}</td>
+                <td>
+                    <button (click)="funEditarUsuario(u)">editar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

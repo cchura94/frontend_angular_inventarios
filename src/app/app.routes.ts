@@ -4,6 +4,7 @@ import { Inicio } from './web/inicio/inicio';
 import { Nosotros } from './web/nosotros/nosotros';
 import { Servicios } from './web/servicios/servicios';
 import { Perfil } from './admin/perfil/perfil';
+import { Usuarios } from './admin/usuarios/usuarios';
 
 export const routes: Routes = [
     {
@@ -20,6 +21,10 @@ export const routes: Routes = [
             {
                 path: "admin/perfil",
                 component: Perfil
+            },
+            {
+                path: "admin/usuario",
+                component: Usuarios
             }
         ]
     },
