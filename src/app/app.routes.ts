@@ -5,6 +5,7 @@ import { Nosotros } from './web/nosotros/nosotros';
 import { Servicios } from './web/servicios/servicios';
 import { Perfil } from './admin/perfil/perfil';
 import { Usuarios } from './admin/usuarios/usuarios';
+import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
     {
@@ -20,11 +21,13 @@ export const routes: Routes = [
             },
             {
                 path: "admin/perfil",
-                component: Perfil
+                component: Perfil,
+                canActivate: [authGuard]
             },
             {
                 path: "admin/usuario",
-                component: Usuarios
+                component: Usuarios,
+                canActivate: [authGuard]
             }
         ]
     },

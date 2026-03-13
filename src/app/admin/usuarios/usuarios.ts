@@ -32,7 +32,7 @@ export class Usuarios implements OnInit{
         this.usuarios.set(res.data);
       },
       error => {
-        alert("Error al obtener los usuarios");
+        // alert("Error al obtener los usuarios");
       }
     )
   }
