@@ -9,4 +9,6 @@ import { RouterOutlet, RouterLink } from '@angular/router';
 })
 export class WebLayout {
 
+  isMenuOpen = false;
+
 }

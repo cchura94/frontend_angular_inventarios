@@ -6,6 +6,7 @@ import { Servicios } from './web/servicios/servicios';
 import { Perfil } from './admin/perfil/perfil';
 import { Usuarios } from './admin/usuarios/usuarios';
 import { authGuard } from './core/guards/auth-guard';
+import { AppLayout } from './layout/component/app.layout';
 
 export const routes: Routes = [
     {
@@ -19,16 +20,23 @@ export const routes: Routes = [
                 path: "auth",
                 loadChildren: () => import('./auth/auth-module').then(m => m.AuthModule)
             },
+        ]
+    },
+    {
+        path: 'admin',
+        component: AppLayout,
+        children: [
             {
-                path: "admin/perfil",
+                path: "perfil",
                 component: Perfil,
                 canActivate: [authGuard]
             },
             {
-                path: "admin/usuario",
+                path: "usuario",
                 component: Usuarios,
                 canActivate: [authGuard]
             }
+
         ]
-    },
+    }
 ];

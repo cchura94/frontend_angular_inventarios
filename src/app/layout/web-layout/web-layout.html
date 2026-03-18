@@ -1,9 +1,65 @@
-<h1>WebLayout</h1>
-
-<a routerLink="">INICIO</a> |
-<a routerLink="/nosotros">NOSOTROS</a> |
-<a routerLink="/servicios">SERVICIOS</a> |
-<a routerLink="/auth/login">INGRESAR</a>
-<br>
-
-<router-outlet />
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50 text-slate-900 font-sans">
+  
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-white/70 border-b border-white/20 shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+          
+          <div class="flex items-center gap-2 group cursor-pointer">
+            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-indigo-200 shadow-lg group-hover:rotate-12 transition-transform">
+              <span class="text-white font-bold text-xl">W</span>
+            </div>
+            <h1 class="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-600 tracking-tight">
+              WebLayout
+            </h1>
+          </div>
+  
+          <div class="hidden md:flex items-center space-x-1">
+            <a routerLink="" routerLinkActive="bg-indigo-50 text-indigo-600"
+               class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-gray-100 transition-all">
+               INICIO
+            </a>
+            <a routerLink="/nosotros" routerLinkActive="bg-indigo-50 text-indigo-600"
+               class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-gray-100 transition-all">
+               NOSOTROS
+            </a>
+            <a routerLink="/servicios" routerLinkActive="bg-indigo-50 text-indigo-600"
+               class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-gray-100 transition-all">
+               SERVICIOS
+            </a>
+            
+            <div class="h-6 w-[1px] bg-slate-200 mx-4"></div>
+  
+            <a routerLink="/auth/login" 
+               class="px-6 py-2.5 bg-slate-900 text-white text-sm font-bold rounded-xl hover:bg-slate-800 hover:shadow-lg transition-all active:scale-95">
+               INGRESAR
+            </a>
+          </div>
+  
+          <div class="md:hidden flex items-center">
+            <button (click)="isMenuOpen = !isMenuOpen" class="p-2 rounded-lg bg-white shadow-sm border border-slate-200 text-slate-600">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path *ngIf="!isMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                <path *ngIf="isMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <div *ngIf="isMenuOpen" class="md:hidden bg-white/95 border-b border-slate-200 animate-fade-in-down">
+        <div class="px-4 pt-2 pb-6 space-y-2">
+          <a routerLink="" (click)="isMenuOpen=false" class="block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:bg-indigo-50 hover:text-indigo-600">INICIO</a>
+          <a routerLink="/nosotros" (click)="isMenuOpen=false" class="block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:bg-indigo-50 hover:text-indigo-600">NOSOTROS</a>
+          <a routerLink="/servicios" (click)="isMenuOpen=false" class="block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:bg-indigo-50 hover:text-indigo-600">SERVICIOS</a>
+          <a routerLink="/auth/login" (click)="isMenuOpen=false" class="block px-4 py-3 rounded-xl text-base font-bold bg-indigo-600 text-white text-center shadow-md">INGRESAR</a>
+        </div>
+      </div>
+    </nav>
+  
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="relative">
+        <router-outlet />
+      </div>
+    </main>
+  
+  </div>
