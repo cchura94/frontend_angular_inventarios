@@ -3,15 +3,22 @@ import UsuarioInterface from '../../core/interfaces/UsuarioInterface';
 import { UsuarioService } from '../../core/services/usuario.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { email } from '@angular/forms/signals';
+import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-usuarios',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TableModule, DialogModule, ButtonModule],
   templateUrl: './usuarios.html',
   styleUrl: './usuarios.scss',
 })
 export class Usuarios implements OnInit{
   
+  visible: boolean = false;
+
+    
+
   usuarios = signal<UsuarioInterface[]>([]);
   usuarioService = inject(UsuarioService);
   user_id = signal(-1);
@@ -36,6 +43,10 @@ export class Usuarios implements OnInit{
       }
     )
   }
+
+  showDialog() {
+    this.visible = true;
+}
 
   funGuardarUsuario(){
 

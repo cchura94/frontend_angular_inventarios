@@ -7,6 +7,7 @@ import { Perfil } from './admin/perfil/perfil';
 import { Usuarios } from './admin/usuarios/usuarios';
 import { authGuard } from './core/guards/auth-guard';
 import { AppLayout } from './layout/component/app.layout';
+import { Categoria } from './admin/inventario/categoria/categoria';
 
 export const routes: Routes = [
     {
@@ -34,6 +35,11 @@ export const routes: Routes = [
             {
                 path: "usuario",
                 component: Usuarios,
+                canActivate: [authGuard]
+            },
+            {
+                path: "categoria",
+                component: Categoria,
                 canActivate: [authGuard]
             }
 
