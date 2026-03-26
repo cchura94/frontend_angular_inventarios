@@ -31,7 +31,7 @@ export class AppMenu {
                 label: 'Gestión Usuarios',
                 items: [
                     { label: 'Mi Perfil', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/perfil'] },
-                    { label: 'Usuarios', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/usuario'] }
+                    { label: 'Usuarios', icon: 'pi pi-fw pi-users', routerLink: ['/admin/usuario'] }
                    
                 ]
             },
@@ -41,45 +41,23 @@ export class AppMenu {
                 items: [
                     {
                         label: 'producto',
-                        icon: 'pi pi-fw pi-globe',
+                        icon: 'pi pi-fw pi-box',
                         routerLink: ['/admin/producto']
                     },
                     {
-                        label: 'Auth',
-                        icon: 'pi pi-fw pi-user',
-                        path: '/auth',
-                        items: [
-                            {
-                                label: 'Login',
-                                icon: 'pi pi-fw pi-sign-in',
-                                routerLink: ['/auth/login']
-                            },
-                            {
-                                label: 'Error',
-                                icon: 'pi pi-fw pi-times-circle',
-                                routerLink: ['/auth/error']
-                            },
-                            {
-                                label: 'Access Denied',
-                                icon: 'pi pi-fw pi-lock',
-                                routerLink: ['/auth/access']
-                            }
-                        ]
-                    },
-                    {
                         label: 'Categoria',
-                        icon: 'pi pi-fw pi-pencil',
+                        icon: 'pi pi-fw pi-table',
                         routerLink: ['/admin/categoria']
                     },
                     {
                         label: 'Almacen',
                         icon: 'pi pi-fw pi-exclamation-circle',
-                        routerLink: ['/pages/notfound']
+                        routerLink: ['/admin/almacen']
                     },
                     {
                         label: 'Sucursal',
-                        icon: 'pi pi-fw pi-circle-off',
-                        routerLink: ['/pages/empty']
+                        icon: 'pi pi-fw pi-globe',
+                        routerLink: ['/admin/sucursal']
                     }
                 ]
             }

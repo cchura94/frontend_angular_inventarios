@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
+import { AlmacenService2 } from '../../core/services/almacen2.service';
 
 @Component({
   selector: 'app-perfil',

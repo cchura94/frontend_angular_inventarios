@@ -1,0 +1,119 @@
+<div class="card p-6 bg-gray-50 dark:bg-gray-900 rounded-xl shadow-sm">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Gestión de Sucursales</h2>
+      <p-button
+        (click)="showDialog()"
+        label="Nueva Sucursal"
+        icon="pi pi-plus"
+        severity="success"
+        class="hover:scale-105 transition-transform"
+      />
+    </div>
+  
+    <p-table
+      [value]="sucursales()"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      styleClass="p-datatable-sm shadow-md rounded-lg overflow-hidden"
+    >
+      <ng-template #header>
+        <tr class="bg-gray-100 dark:bg-gray-800">
+          <th class="p-4 text-left text-gray-600 dark:text-gray-300">Id</th>
+          <th class="p-4 text-left text-gray-600 dark:text-gray-300 font-semibold">Nombre</th>
+          <th class="p-4 text-left text-gray-600 dark:text-gray-300 font-semibold">Dirección</th>
+          <th class="p-4 text-left text-gray-600 dark:text-gray-300 font-semibold">Ciudad</th>
+          <th class="p-4 text-center text-gray-600 dark:text-gray-300 font-semibold">Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-sucursal>
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+          <td class="p-4 border-b border-gray-100 dark:border-gray-700">{{ sucursal.id }}</td>
+          <td class="p-4 border-b border-gray-100 dark:border-gray-700 font-medium">{{ sucursal.nombre }}</td>
+          <td class="p-4 border-b border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-400">{{ sucursal.direccion }}</td>
+          <td class="p-4 border-b border-gray-100 dark:border-gray-700">
+             <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs uppercase font-bold">
+               {{ sucursal.ciudad }}
+             </span>
+          </td>
+          <td class="p-4 border-b border-gray-100 dark:border-gray-700 text-center">
+            <p-button
+              icon="pi pi-pencil"
+              [rounded]="true"
+              [text]="true"
+              (click)="editarSucursal(sucursal)"
+            />
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  
+  <p-dialog
+    [(visible)]="visible"
+    [modal]="true"
+    [draggable]="false"
+    [resizable]="false"
+    class="custom-dialog"
+  >
+    <ng-template #header>
+      <div class="flex items-center gap-3">
+          <div class="p-2 bg-primary-100 rounded-lg">
+              <i class="pi pi-map-marker text-primary-600 text-xl"></i>
+          </div>
+          <span class="text-xl font-bold text-gray-800">{{ editando ? 'Editar' : 'Nueva' }} Sucursal</span>
+      </div>
+    </ng-template>
+  
+    <form [formGroup]="sucursalForm" (ngSubmit)="funGuardar()" class="flex flex-col gap-5 mt-4">
+      <div class="flex flex-col gap-2">
+        <label for="nombre" class="text-sm font-semibold text-gray-700">Nombre de Sucursal</label>
+        <input 
+          pInputText 
+          id="nombre" 
+          formControlName="nombre" 
+          class="w-full border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 transition-all"
+          placeholder="Ej. Central Norte"
+        />
+        @if (sucursalForm.get('nombre')?.invalid && sucursalForm.get('nombre')?.touched) {
+          <small class="text-red-500 text-xs italic">El nombre es requerido.</small>
+        }
+      </div>
+  
+      <div class="flex flex-col gap-2">
+        <label for="direccion" class="text-sm font-semibold text-gray-700">Dirección</label>
+        <input 
+          pInputText 
+          id="direccion" 
+          formControlName="direccion" 
+          class="w-full"
+          placeholder="Calle Falsa 123"
+        />
+      </div>
+  
+      <div class="flex flex-col gap-2">
+        <label for="ciudad" class="text-sm font-semibold text-gray-700">Ciudad</label>
+        <input 
+          pInputText 
+          id="ciudad" 
+          formControlName="ciudad" 
+          class="w-full"
+          placeholder="Ciudad de México"
+        />
+      </div>
+  
+      <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-100">
+        <p-button
+          label="Descartar"
+          severity="secondary"
+          [text]="true"
+          (click)="visible = false"
+        />
+        <p-button
+          label="Guardar Cambios"
+          icon="pi pi-check"
+          type="submit"
+          [disabled]="sucursalForm.invalid"
+          class="shadow-lg shadow-primary-200"
+        />
+      </div>
+    </form>
+  </p-dialog>

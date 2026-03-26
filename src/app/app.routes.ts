@@ -8,6 +8,8 @@ import { Usuarios } from './admin/usuarios/usuarios';
 import { authGuard } from './core/guards/auth-guard';
 import { AppLayout } from './layout/component/app.layout';
 import { Categoria } from './admin/inventario/categoria/categoria';
+import { SucursalComponent } from './admin/inventario/sucursal/sucursal.component';
+import { AlmacenComponent } from './admin/inventario/almacen/almacen.component';
 
 export const routes: Routes = [
     {
@@ -40,6 +42,16 @@ export const routes: Routes = [
             {
                 path: "categoria",
                 component: Categoria,
+                canActivate: [authGuard]
+            },
+            {
+                path: "sucursal",
+                component: SucursalComponent,
+                canActivate: [authGuard]
+            },
+            {
+                path: "almacen",
+                component: AlmacenComponent,
                 canActivate: [authGuard]
             }
 

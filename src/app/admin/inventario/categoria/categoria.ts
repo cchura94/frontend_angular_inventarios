@@ -4,20 +4,31 @@ import { CategoriaService } from '../../../core/services/categoria.service';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
+import { CategoriaInteface } from '../../../core/interfaces/CategoriaInteface';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-categoria',
-  imports: [TableModule, ButtonModule, DialogModule, InputTextModule],
+  imports: [ReactiveFormsModule,TableModule, ButtonModule, DialogModule, InputTextModule],
   templateUrl: './categoria.html',
   styleUrl: './categoria.scss',
 })
 export class Categoria {
 
-  categorias=signal<any[]>([])
+  categorias=signal<CategoriaInteface[]>([])
 
-  categoriaService = inject(CategoriaService,);
+  categoriaService = inject(CategoriaService);
+  fb = inject(FormBuilder);
+  editando = false;
 
   visible: boolean = false;
+
+  categoriaForm = this.fb.group({
+    id: [null as number | null],
+    nombre: ['', Validators.required],
+    descripcion: ['']
+  })
+
 
   constructor(){
     this.funListarCategorias()
@@ -34,5 +45,43 @@ export class Categoria {
 
   showDialog() {
       this.visible = true;
+  }
+
+  funGuardarCategoria(){
+    if(this.categoriaForm.invalid) return;
+
+    const categoria: CategoriaInteface = this.categoriaForm.value as CategoriaInteface;
+    if(this.editando){
+      let id = categoria.id?categoria.id:-1; 
+      this.categoriaService.update(id, categoria).subscribe(
+        (res) => {
+          this.funListarCategorias()
+          this.visible = false;
+          this.categoriaForm.reset();
+          this.editando = false;
+
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+      
+    }else{
+      this.categoriaService.store(categoria).subscribe(
+        (res) => {
+          this.funListarCategorias()
+          this.visible = false;
+          this.categoriaForm.reset();
+          this.editando = false;
+        }
+      )
+    }
+  }
+
+  editarCategoria(cat: CategoriaInteface){
+    this.visible = true;
+    this.editando = true;
+    this.categoriaForm.patchValue(cat);
+
   }
 }
