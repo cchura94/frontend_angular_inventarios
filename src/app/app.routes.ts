@@ -10,6 +10,7 @@ import { AppLayout } from './layout/component/app.layout';
 import { Categoria } from './admin/inventario/categoria/categoria';
 import { SucursalComponent } from './admin/inventario/sucursal/sucursal.component';
 import { AlmacenComponent } from './admin/inventario/almacen/almacen.component';
+import { Producto } from './admin/inventario/producto/producto';
 
 export const routes: Routes = [
     {
@@ -52,6 +53,11 @@ export const routes: Routes = [
             {
                 path: "almacen",
                 component: AlmacenComponent,
+                canActivate: [authGuard]
+            },
+            {
+                path: "producto",
+                component: Producto,
                 canActivate: [authGuard]
             }
 
