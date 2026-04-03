@@ -10,6 +10,7 @@ import { DialogModule } from 'primeng/dialog';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FileUploadModule } from 'primeng/fileupload';
+import { ImageModule } from 'primeng/image';
 
 
 import { ProductoService } from '../../../core/services/producto.service';
@@ -27,7 +28,7 @@ interface Column {
 
 @Component({
   selector: 'app-producto',
-  imports: [FormsModule, TableModule, ToolbarModule, Button, IconFieldModule, InputIconModule, CommonModule, InputText, DialogModule, RadioButtonModule, InputNumberModule, TextareaModule, FileUploadModule],
+  imports: [FormsModule, TableModule, ToolbarModule, Button, IconFieldModule, InputIconModule, CommonModule, InputText, DialogModule, RadioButtonModule, InputNumberModule, TextareaModule, FileUploadModule, ImageModule],
   templateUrl: './producto.html',
   styleUrl: './producto.scss',
 })
@@ -41,7 +42,13 @@ export class Producto implements OnInit {
   categoriaService = inject(CategoriaService)
   product = signal<any>({estado: true})
   submitted = signal<boolean>(false)
-  totalRecords = signal(0)
+  totalRecords = signal<number>(0)
+
+  totalRecords2 = signal(0)
+  loading = signal(true)
+
+  search = signal("")
+  
   
   modalImage = signal<boolean>(false)
   ngOnInit(): void {
@@ -56,14 +63,19 @@ export class Producto implements OnInit {
     this.funListarCategorias();
   }
 
-  funListarProductos(){
-    this.productoService.index().subscribe(
+  funListarProductos(page: number=1, limit: number = 5){
+    this.loading.set(true)
+    this.productoService.index(page, limit, this.search() ).subscribe(
       (res: any) => {
         this.products.set(res.data)
+        this.totalRecords.set(res.total)
+        this.loading.set(false)
+
       },
       (error: any) =>  {
 
       }
+
     )
   }
 
@@ -76,6 +88,11 @@ export class Producto implements OnInit {
 
       }
     )
+  }
+
+  funOrdenarProducto(event: any){
+    console.log(event);
+    alert("Ordenendo datos");
   }
   funSubirImagen(event: any) {
     const imagen = event.files[0];
@@ -97,6 +114,13 @@ export class Producto implements OnInit {
   
   hideDialogImagenProducto(){
     this.modalImage.set(false);
+  }
+
+  cargarDatos(event:any){
+    let page = event.first / event.rows + 1;
+
+    this.funListarProductos(page, event.rows);
+
   }
 
   openNew(){

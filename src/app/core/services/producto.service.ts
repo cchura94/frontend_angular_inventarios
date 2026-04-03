@@ -10,8 +10,8 @@ export class ProductoService {
 
   http = inject(HttpClient)
 
-  index(){
-    return this.http.get(`${this.urlbase}/api/producto`);
+  index(page=1, limit=3, search: string=""){
+    return this.http.get(`${this.urlbase}/api/producto?page=${page}&limit=${limit}&search=${search}`);
   }
   store(datos: any){
     return this.http.post(`${this.urlbase}/api/producto`, datos);

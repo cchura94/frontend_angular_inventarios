@@ -8,15 +8,15 @@
         </ng-template>
     </p-toolbar>
 {{products()}}
-    <p-table #dt [value]="products()" [rows]="10" [columns]="cols" [paginator]="true"
-        [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id"
+    <p-table #dt [value]="products()" [rows]="10" [lazy]="true" [totalRecords]="totalRecords()" [columns]="cols" [paginator]="true" [loading]="loading()" (onLazyLoad)="cargarDatos($event)"
+        [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id" (onSort)="funOrdenarProducto($event)"
         currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} productos" [showCurrentPageReport]="true">
         <ng-template #caption>
             <div class="flex items-center justify-between">
-                <h5 class="m-0">Manage Products</h5>
+                <h5 class="m-0">Administrar Datos</h5>
                 <p-iconfield>
                     <p-inputicon class="pi pi-search" />
-                    <input pInputText type="text" placeholder="Buscar..." />
+                    <input pInputText type="text" placeholder="Buscar..." [(ngModel)]="search" (change)="funListarProductos()" />
                 </p-iconfield>
             </div>
         </ng-template>
@@ -26,20 +26,20 @@
                     <p-tableHeaderCheckbox />
                 </th>
                 <th style="min-width: 2rem">ID</th>
-                <th pSortableColumn="name" style="min-width:8rem">
+                <th pSortableColumn="nombre" style="min-width:8rem">
                     <div class="flex items-center gap-2">
                         Nombre
                         <p-sortIcon field="name" />
                     </div>
                 </th>
                 <th>Imagen</th>
-                <th pSortableColumn="price" style="min-width: 8rem">
+                <th pSortableColumn="precio" style="min-width: 8rem">
                     <div class="flex items-center gap-2">
                         Price
                         <p-sortIcon field="price" />
                     </div>
                 </th>
-                <th pSortableColumn="category" style="min-width:10rem">
+                <th pSortableColumn="categoria" style="min-width:10rem">
                     <div class="flex items-center gap-2">
                         Category
                         <p-sortIcon field="category" />
@@ -56,11 +56,11 @@
                 <td style="min-width: 1rem">{{ product.id }}</td>
                 <td style="min-width: 8rem">{{ product.nombre }}</td>
                 <td>
-                    <img [src]="'http://127.0.0.1:8000/' + product.imagen"
-                        [alt]="product.name" style="width: 64px" class="rounded" />
+                    <p-image [src]="'http://127.0.0.1:8000/' + product.imagen" alt="Image" width="60" [preview]="true" />
+
                 </td>
                 <td>{{ product.precio_venta | currency: 'USD' }}</td>
-                <td>{{ product.categoria_id }}</td>
+                <td>{{ product.categoria.nombre }}</td>
                 
                 
                 <td>
