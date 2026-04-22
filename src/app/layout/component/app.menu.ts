@@ -60,6 +60,27 @@ export class AppMenu {
                         routerLink: ['/admin/sucursal']
                     }
                 ]
+            },
+            {
+                label: 'Compra Venta',
+                icon: 'pi pi-fw pi-briefcase',
+                items: [
+                    {
+                        label: 'Notas Compra/Venta',
+                        icon: 'pi pi-fw pi-box',
+                        routerLink: ['/admin/notas']
+                    },
+                    {
+                        label: 'Nueva Compra',
+                        icon: 'pi pi-fw pi-table',
+                        routerLink: ['/admin/notas/compra']
+                    },
+                    {
+                        label: 'Nueva Venta',
+                        icon: 'pi pi-fw pi-exclamation-circle',
+                        routerLink: ['/admin/notas/venta']
+                    }
+                ]
             }
         ];
     }

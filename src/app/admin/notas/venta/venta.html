@@ -1,0 +1,142 @@
+<div class="bg-gray-100 min-h-screen p-6">
+    <div class="max-w-7xl mx-auto">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <div class="bg-white rounded-lg-shadow p-4">
+                <p-table #dt [value]="products()" [rows]="10" [lazy]="true" [totalRecords]="totalRecords()" [columns]="cols" [paginator]="true" [loading]="loading()" (onLazyLoad)="cargarDatos($event)"
+                    [tableStyle]="{ 'min-width': '20rem' }" [rowHover]="true" dataKey="id" 
+                    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} productos" [showCurrentPageReport]="true">
+                    <ng-template #caption>
+                        <div class="flex items-center justify-between">
+                            <h5 class="m-0">Administrar Datos</h5>
+                            <p-iconfield>
+                                <p-inputicon class="pi pi-search" />
+                                <input pInputText type="text" placeholder="Buscar..." [(ngModel)]="search" (change)="funListarProductos()" />
+                            </p-iconfield>
+                        </div>
+                        <div class="bg-white rounded shadow">
+                            <div>
+                                Sucursal:
+                                <p-select [options]="sucursales()" [(ngModel)]="selectedSucursal" optionLabel="nombre" optionValue="id" placeholder="Seleccionar Sucursal" class="w-full md:w-56"  (onChange)="funSelectedSucursal()" />
+
+                            </div>
+                            @if (!almacen().id) {
+                                <p-table [value]="almacenes()">
+                                    <ng-template #header>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>NOMBRE</th>
+                                            <th>CODIGO</th>
+                                            <th>SUCURSAL</th>
+                                            <th>ACCIÓN</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template #body let-alm>
+                                        <tr>
+                                            <td>{{ alm.id }}</td>
+                                            <td>{{ alm.nombre }}</td>
+                                            <td>{{ alm.codigo }}</td>
+                                            <td>
+                                                {{ alm.sucursal.nombre }}
+                                                <small>    {{ alm.sucursal.direccion }}</small>
+                                            </td>
+                                            <td>
+                                                <p-button icon="pi pi-plus" class="mr-2" [rounded]="false" [outlined]="false" (click)="seleccionarAlmacen(alm)"></p-button>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            }
+                            @if (almacen()) {
+                                <h6>ALMACEN: {{ almacen().nombre }}</h6>
+                                <h6>CODIGO: {{ almacen().codigo }}</h6>
+                            }
+
+                        </div>
+                    </ng-template>
+                    <ng-template #header>
+                        <tr>
+                            <th style="min-width: 2rem">ID</th>
+                            <th pSortableColumn="nombre" style="min-width:8rem">
+                                <div class="flex items-center gap-2">
+                                    Nombre
+                                    <p-sortIcon field="name" />
+                                </div>
+                            </th>
+                            <th>Imagen</th>
+                            <th pSortableColumn="precio" style="min-width: 8rem">
+                                <div class="flex items-center gap-2">
+                                    Price
+                                    <p-sortIcon field="price" />
+                                </div>
+                            </th>
+                            <th pSortableColumn="categoria" style="min-width:3rem">
+                                <div class="flex items-center gap-2">
+                                    Category
+                                    <p-sortIcon field="category" />
+                                </div>
+                            </th>
+                            <th pSortableColumn="Stock" style="min-width:3rem">
+                                <div class="flex items-center gap-2">
+                                    Stock
+                                    <p-sortIcon field="category" />
+                                </div>
+                            </th>
+                            <th style="min-width: 2rem"></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template #body let-product>
+                        <tr>
+                            <td style="min-width: 1rem">{{ product.id }}</td>
+                            <td style="min-width: 8rem">{{ product.nombre }}</td>
+                            <td>
+                                <p-image [src]="'http://127.0.0.1:8000/' + product.imagen" alt="Image" width="60" [preview]="true" />
+
+                            </td>
+                            <td>{{ product.precio_venta | currency: 'USD' }}</td>
+                            <td>{{ product.categoria.nombre }}</td>
+                            <td style="min-width: 2rem;">
+                                @for (alm of product.almacenes; track $index) {
+                                    <small>
+                                        <a [href]="alm?.id">{{ alm?.nombre }}</a>
+                                    </small>
+                                    <br>
+                                    <small [ngClass]="{
+                                        'text-red-600 font-bold': alm?.pivot.cantidad_actual<3,
+                                        'text-green-600': alm?.pivot.cantidad_actual>=3
+                                    }">
+                                         <strong> CANT:{{ alm?.pivot.cantidad_actual }}</strong>
+                                    </small>
+                                    <br>
+                                }
+
+                            </td>
+                            
+                            
+                            <td>
+
+                                <p-button icon="pi pi-plus" class="mr-2" [rounded]="true"
+                                    (click)="addCarrito(product)" />
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+
+            </div>
+            <div class="flex flex-col gap-6">
+                <div class="bg-white rounded-lg shadow p-4">
+                    <h2 class="text-xl font-semibold mb-4">Carrito</h2>
+
+                </div>
+                <div class="bg-white rounded-lg shadow p-4">
+                    <h2 class="text-xl font-semibold mb-4">Cliente</h2>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

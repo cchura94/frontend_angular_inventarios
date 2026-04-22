@@ -1,0 +1,28 @@
+<div class="card">
+    <p-select [options]="[{name: 'Compra', code: 'compra'}, {name: 'Venta', code: 'venta'}]" optionLabel="name" placeholder="Seleccionar Tipo" class="w-full md:w-56" [(ngModel)]="selectedTipo" (onChange)="listadoNotas()" />
+  {{selectedTipo().code}}
+    <p-table [value]="notas()" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template #header>
+            <tr>
+                <th>FECHA</th>
+                <th>TIPO NOTA</th>
+                <th>CLIENTE/PROVEEDOR</th>
+                <th>Atendido Por</th>
+                <th>Detalle</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-nota>
+            <tr>
+                <td>{{ nota.fecha }}</td>
+                <td>{{ nota.tipo_nota }}</td>
+                <td>{{ nota.cliente.razon_social }}</td>
+                <td>{{ nota.user.email }}</td>
+                <td>
+
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</div>

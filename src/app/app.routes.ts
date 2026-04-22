@@ -11,6 +11,9 @@ import { Categoria } from './admin/inventario/categoria/categoria';
 import { SucursalComponent } from './admin/inventario/sucursal/sucursal.component';
 import { AlmacenComponent } from './admin/inventario/almacen/almacen.component';
 import { Producto } from './admin/inventario/producto/producto';
+import { CompraVenta } from './admin/notas/compra-venta/compra-venta';
+import { Compra } from './admin/notas/compra/compra';
+import { Venta } from './admin/notas/venta/venta';
 
 export const routes: Routes = [
     {
@@ -58,6 +61,22 @@ export const routes: Routes = [
             {
                 path: "producto",
                 component: Producto,
+                canActivate: [authGuard]
+            },
+            {
+                path: "notas",
+                component: CompraVenta,
+                canActivate: [authGuard]
+            }
+            ,
+            {
+                path: "notas/compra",
+                component: Compra,
+                canActivate: [authGuard]
+            },
+            {
+                path: "notas/venta",
+                component: Venta,
                 canActivate: [authGuard]
             }
 
